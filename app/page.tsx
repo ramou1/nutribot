@@ -47,15 +47,14 @@ export default function Page() {
   return (
     <div className="min-h-screen flex flex-col">
       {!isFirstInteraction && (
-        <header className="w-full">
-          <div className="w-full px-4 h-16 flex items-center justify-between">
+        <header className="fixed top-0 inset-x-0 z-50">
+          <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#f1faee] via-[#f1faee] to-transparent">
             <h1 
               className="text-2xl font-bold cursor-pointer hover:opacity-80 text-[#1d3557]" 
               onClick={handleNewChat}
             >
               NutriBot
             </h1>
-           
           </div>
         </header>
       )}
@@ -93,7 +92,7 @@ export default function Page() {
           </div>
         ) : (
           <>
-            <div className="flex flex-col gap-6 pb-64">
+            <div className="flex flex-col gap-6 pb-64 pt-16">
               <div className="container max-w-screen-md mx-auto px-4 space-y-6">
                 {messages.map((message, i) => (
                   <Fragment key={i}>
