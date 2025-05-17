@@ -11,17 +11,17 @@ import { Button } from "@/components/button";
 const SUGGESTIONS = [
   {
     title: "Plano Alimentar",
-    description: "Crie um plano alimentar semanal para mim",
+    description: "Crie um plano alimentar semanal para mim que sou diabético",
     color: "#e63946"
   },
   {
-    title: "Receitas",
-    description: "Sugira receitas saudáveis para o almoço",
+    title: "Restaurantes",
+    description: "Encontre restaurantes com opções veganas ou vegetarianas",
     color: "#457b9d"
   },
   {
-    title: "Dicas",
-    description: "Como melhorar minha alimentação?",
+    title: "Receitas",
+    description: "Sugira receitas sem lactose e sem glúten",
     color: "#1d3557"
   }
 ];
@@ -67,8 +67,8 @@ export default function Page() {
 
       <div className="flex-1 py-8">
         {isFirstInteraction ? (
-          <div className="flex-1 flex flex-col items-center justify-center gap-2 mt-32">
-            <h1 className="text-4xl font-bold text-[#1d3557]">NutriBot</h1>
+          <div className="flex-1 flex flex-col items-center justify-center gap-1 mt-32">
+            <h1 className="text-6xl font-bold text-[#1d3557]">NutriBot</h1>
             <p className="text-xl text-[#457b9d]">Seu assistente nutricionista</p>
             <div className="w-full max-w-2xl mt-8">
               <SendMessageForm 

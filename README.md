@@ -15,6 +15,18 @@ NutriBot é um assistente nutricional inteligente que utiliza LLM (Large Languag
 - Fornecimento de informações nutricionais aproximadas
 - Histórico de pedidos para refinar recomendações futuras
 
+### 🥗 Restrições Alimentares Suportadas
+
+O NutriBot está preparado para auxiliar pessoas com as seguintes restrições alimentares:
+
+- Diabéticos
+- Alérgicos à proteína do leite
+- Intolerantes à lactose
+- Veganos
+- Vegetarianos
+- Celíacos
+- Pessoas com Síndrome do Intestino Irritável
+
 ### 💡 Benefícios
 
 - **Para Clientes**: Recebem recomendações personalizadas baseadas em suas necessidades específicas

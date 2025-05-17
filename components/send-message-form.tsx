@@ -39,7 +39,7 @@ export default function SendMessageForm({
           rows={rows}
           value={message}
           onChange={setMessage}
-          placeholder="Conte-me sobre suas preferências alimentares e objetivos de saúde..."
+          placeholder="Me conte sobre suas restrições alimentares, preferências e objetivos de saúde..."
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
@@ -47,7 +47,7 @@ export default function SendMessageForm({
             }
           }}
           className={cn(
-            "drop-shadow-lg w-full text-base bg-white rounded-3xl border-0 p-4 pr-16 mb-4",
+            "drop-shadow-lg w-full text-sm bg-white rounded-3xl border-0 p-4 pr-16 mb-4",
             "resize-none focus-visible:outline-none"
           )}
         />
