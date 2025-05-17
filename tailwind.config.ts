@@ -57,6 +57,7 @@ const config = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         heading: ["var(--font-heading)", ...fontFamily.sans],
+        effra: ["var(--font-effra)", ...fontFamily.sans],
         "fallback-sans": "sans-serif",
       },
       keyframes: {

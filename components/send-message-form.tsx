@@ -47,7 +47,7 @@ export default function SendMessageForm({
             }
           }}
           className={cn(
-            "drop-shadow-lg w-full text-lg bg-white rounded-3xl border-0 p-4 pr-16 mb-4",
+            "drop-shadow-lg w-full text-base bg-white rounded-3xl border-0 p-4 pr-16 mb-4",
             "resize-none focus-visible:outline-none"
           )}
         />
