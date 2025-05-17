@@ -9,11 +9,13 @@ export default function SendMessageForm({
   message,
   setMessage,
   onSendMessage,
+  rows = 1,
 }: {
   isThinking: boolean;
   message: string;
   setMessage: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   onSendMessage: () => Promise<void>;
+  rows?: number;
 }) {
   const handleSubmit = async () => {
     const value = message.trim();
@@ -34,7 +36,7 @@ export default function SendMessageForm({
         <ReactTextareaAutosize
           autoFocus
           maxRows={8}
-          rows={1}
+          rows={rows}
           value={message}
           onChange={setMessage}
           placeholder="Me peça dicas de nutrição..."
