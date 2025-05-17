@@ -24,7 +24,7 @@ export default function Page() {
       </div>
       <div className="container max-w-screen-md fixed inset-x-0 bottom-0 w-full">
         <SendMessageForm 
-          isThinking={true || status === 'streaming' || status === 'submitted'} 
+          isThinking={status === 'streaming' || status === 'submitted'} 
           message={input}
           setMessage={handleInputChange}
           onSendMessage={async () => {

@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { ChangeEvent } from "react";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { Button } from "./button";
+import { ArrowUp } from "lucide-react";
 
 export default function SendMessageForm({
   isThinking,
@@ -24,7 +25,7 @@ export default function SendMessageForm({
   return (
     <div>
       <form
-        className="flex gap-4"
+        className="relative"
         onSubmit={async (e) => {
           e.preventDefault();
           handleSubmit();
@@ -36,7 +37,7 @@ export default function SendMessageForm({
           rows={1}
           value={message}
           onChange={setMessage}
-          placeholder="Type here!"
+          placeholder="Me peça dicas de nutrição..."
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
@@ -44,12 +45,16 @@ export default function SendMessageForm({
             }
           }}
           className={cn(
-            "drop-shadow-lg w-full text-lg bg-white rounded-2xl border-2 border-primary p-4 mb-4",
+            "drop-shadow-lg w-full text-lg bg-white rounded-3xl border-0 p-4 pr-16 mb-4",
             "resize-none focus-visible:outline-none"
           )}
         />
-        <Button disabled={isThinking || !message.trim()} type="submit" className="drop-shadow-lg">
-          Send
+        <Button 
+          disabled={isThinking || !message.trim()} 
+          type="submit" 
+          className="absolute right-4 bottom-8 h-10 w-10 p-0 rounded-full flex items-center justify-center"
+        >
+          <ArrowUp className="h-5 w-5" />
         </Button>
       </form>
     </div>

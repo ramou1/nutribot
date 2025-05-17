@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     let truncatedMessages = messages.slice(-8);
 
     const result = streamText({
-      model: openai('gpt-4o'),
+      model: openai('gpt-4'),
       system: 'You are a helpful assistant.',
       messages: truncatedMessages,
       maxTokens: 500,

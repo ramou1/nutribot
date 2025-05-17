@@ -4,7 +4,7 @@ export default function Message({ name, theirs, children }: { name: string; thei
   return (
     <div className={`flex w-full ${theirs ? "justify-start pr-40" : "justify-end pl-40"}`}>
       <div
-        className={`px-4 p-3 border-2 border-primary w-full overflow-x-scroll rounded-2xl ${
+        className={`px-4 p-3 border-0 w-full overflow-x-scroll rounded-3xl ${
           theirs ? "bg-white" : "bg-accent"
         }`}
       >
