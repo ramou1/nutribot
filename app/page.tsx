@@ -50,7 +50,7 @@ export default function Page() {
         <header className="w-full">
           <div className="w-full px-4 h-16 flex items-center justify-between">
             <h1 
-              className="text-xl font-bold cursor-pointer hover:opacity-80 text-[#1d3557]" 
+              className="text-2xl font-bold cursor-pointer hover:opacity-80 text-[#1d3557]" 
               onClick={handleNewChat}
             >
               NutriBot

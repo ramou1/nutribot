@@ -47,14 +47,14 @@ export default function SendMessageForm({
             }
           }}
           className={cn(
-            "drop-shadow-lg w-full text-sm bg-white rounded-3xl border-0 p-4 pr-16 mb-4",
+            "drop-shadow-lg w-full text-base bg-white rounded-3xl border-0 p-4 pr-16 mb-4",
             "resize-none focus-visible:outline-none"
           )}
         />
         <Button 
           disabled={isThinking || !message.trim()} 
           type="submit" 
-          className="absolute right-1 top-0.5 h-12 w-12 p-0 rounded-full flex items-center justify-center"
+          className="absolute right-1 top-1 h-12 w-12 p-0 rounded-full flex items-center justify-center"
         >
           <ArrowUp className="h-5 w-5" />
         </Button>
