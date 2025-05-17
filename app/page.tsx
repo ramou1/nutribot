@@ -55,12 +55,7 @@ export default function Page() {
             >
               NutriBot
             </h1>
-            <Button
-              onClick={handleNewChat}
-              className="h-10 w-10 p-0 rounded-full bg-[#a8dadc] hover:bg-[#457b9d] hover:text-white"
-            >
-              <Plus className="h-5 w-5" />
-            </Button>
+           
           </div>
         </header>
       )}
@@ -99,18 +94,20 @@ export default function Page() {
         ) : (
           <>
             <div className="flex flex-col gap-6 pb-64">
-              {messages.map((message, i) => (
-                <Fragment key={i}>
-                  {message.role === "user" ? (
-                    <UserMessage>{message.content}</UserMessage>
-                  ) : (
-                    <AssistantMessage content={message.content} />
-                  )}
-                </Fragment>
-              ))}
+              <div className="container max-w-screen-md mx-auto px-4 space-y-6">
+                {messages.map((message, i) => (
+                  <Fragment key={i}>
+                    {message.role === "user" ? (
+                      <UserMessage>{message.content}</UserMessage>
+                    ) : (
+                      <AssistantMessage content={message.content} />
+                    )}
+                  </Fragment>
+                ))}
+              </div>
             </div>
             <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-[#f1faee] via-[#f1faee] to-transparent pt-20 pb-4">
-              <div className="container max-w-screen-md">
+              <div className="container max-w-screen-md mx-auto">
                 <SendMessageForm 
                   isThinking={isLoading} 
                   message={input}

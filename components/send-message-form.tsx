@@ -54,7 +54,7 @@ export default function SendMessageForm({
         <Button 
           disabled={isThinking || !message.trim()} 
           type="submit" 
-          className="absolute right-4 bottom-8 h-10 w-10 p-0 rounded-full flex items-center justify-center"
+          className="absolute right-1 top-0.5 h-12 w-12 p-0 rounded-full flex items-center justify-center"
         >
           <ArrowUp className="h-5 w-5" />
         </Button>
