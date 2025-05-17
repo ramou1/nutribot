@@ -1,11 +1,12 @@
-import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { effra } from "./fonts";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
+const inter = Inter({ subsets: ["latin"] });
+
 export const metadata: Metadata = {
-  title: "NutriChef",
-  description: "Seu assistente de nutrição",
+  title: "NutriBot",
+  description: "Seu assistente nutricionista",
 };
 
 export default function RootLayout({
@@ -15,9 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={cn("font-effra", effra.variable)}>
-        <main className="container max-w-screen-md">{children}</main>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

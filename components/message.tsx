@@ -1,31 +1,29 @@
-import { ReactNode } from "react";
+import Image from "next/image";
 
-export default function Message({ theirs, children }: { theirs: boolean; children: ReactNode }) {
+export default function Message({ children, theirs = false }: { children: React.ReactNode, theirs?: boolean }) {
   return (
-    <div className={`flex w-full ${theirs ? "justify-start pr-40" : "justify-end pl-40"}`}>
-      <div className="flex items-start gap-2">
-        {theirs && (
-          <img
-            src="/images/nutrichef-avatar.jpeg"
-            alt="NutriChef"
-            className="w-10 h-10 rounded-full"
-          />
-        )}
-        <div
-          className={`px-4 p-3 border-0 w-full overflow-x-scroll rounded-3xl ${
-            theirs ? "bg-white" : "bg-primary text-primary-foreground"
-          }`}
-        >
-          <div className="min-w-24">{children}</div>
-        </div>
-        {!theirs && (
-          <img
-            src="/images/user-avatar.jpeg"
-            alt="Usuário"
-            className="w-10 h-10 rounded-full"
-          />
-        )}
+    <div className={`flex gap-4 ${theirs ? 'justify-start' : 'justify-end'}`}>
+      {theirs && (
+        <Image
+          src="/images/nutribot-avatar.jpeg"
+          alt="NutriBot"
+          width={40}
+          height={40}
+          className="w-10 h-10 rounded-full"
+        />
+      )}
+      <div className={`max-w-[80%] rounded-2xl px-4 py-2 ${theirs ? 'bg-white' : 'bg-[#1d3557] text-white'}`}>
+        {children}
       </div>
+      {!theirs && (
+        <Image
+          src="/images/user-avatar.jpeg"
+          alt="Você"
+          width={40}
+          height={40}
+          className="w-10 h-10 rounded-full"
+        />
+      )}
     </div>
   );
 }

@@ -1,4 +1,6 @@
-# NutriChef - Next.js & OpenAI
+# NutriBot - Next.js & OpenAI
+
+Um assistente nutricionista inteligente construído com Next.js e OpenAI.
 
 1. Create new `.env` file from `.env.sample` and add env vars
 1. Run `npm i` to install dependencies
