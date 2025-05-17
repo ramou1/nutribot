@@ -5,7 +5,7 @@ export default function Message({ children, theirs = false }: { children: React.
     <div className={`flex gap-4 ${theirs ? 'justify-start' : 'justify-end'}`}>
       {theirs && (
         <Image
-          src="/images/nutribot-avatar.jpeg"
+          src="/images/nutribot-avatar.png"
           alt="NutriBot"
           width={40}
           height={40}
@@ -17,7 +17,7 @@ export default function Message({ children, theirs = false }: { children: React.
       </div>
       {!theirs && (
         <Image
-          src="/images/user-avatar.jpeg"
+          src="/images/user-avatar.png"
           alt="Você"
           width={40}
           height={40}
