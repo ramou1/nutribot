@@ -71,7 +71,8 @@
     @apply border-border;
   }
   body {
-    @apply bg-[#f1faee] text-foreground;
+    @apply text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    background: radial-gradient(circle at top right, #f1faee 0%, #e9f5e9 50%, #c5dcc5 100%);
   }
 }
