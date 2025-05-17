@@ -24,21 +24,28 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="w-full border-b">
-        <div className="w-full px-4 h-16 flex items-center justify-between">
-          <h1 className="text-xl font-bold">NutriChef</h1>
-          <Button
-            onClick={handleNewChat}
-            className="h-10 w-10 p-0 rounded-full bg-white/50 hover:bg-white/80"
-          >
-            <Plus className="h-5 w-5" />
-          </Button>
-        </div>
-      </header>
+      {!isFirstInteraction && (
+        <header className="w-full">
+          <div className="w-full px-4 h-16 flex items-center justify-between">
+            <h1 
+              className="text-xl font-bold cursor-pointer hover:opacity-80" 
+              onClick={handleNewChat}
+            >
+              NutriChef
+            </h1>
+            <Button
+              onClick={handleNewChat}
+              className="h-10 w-10 p-0 rounded-full bg-white/50 hover:bg-white/80"
+            >
+              <Plus className="h-5 w-5" />
+            </Button>
+          </div>
+        </header>
+      )}
 
       <div className="flex-1 py-6">
         {isFirstInteraction ? (
-          <div className="flex-1 flex flex-col items-center justify-center gap-6 mt-16">
+          <div className="flex-1 flex flex-col items-center justify-center gap-6 mt-32">
             <h1 className="text-4xl font-bold">NutriChef</h1>
             <p className="text-xl text-gray-600">Seu assistente nutricionista</p>
             <div className="w-full max-w-2xl mt-8">
