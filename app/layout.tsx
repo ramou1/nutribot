@@ -1,10 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { fontHeading, fontSans } from "./fonts";
+import { effra } from "./fonts";
 import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "NutriChef",
@@ -18,13 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <head>
-        <link
-          href="https://fonts.cdnfonts.com/css/effra"
-          rel="stylesheet"
-        />
-      </head>
-      <body className={cn("font-sans", fontSans.variable, fontHeading.variable, inter.className, "font-effra")}>
+      <body className={cn("font-effra", effra.variable)}>
         <main className="container max-w-screen-md">{children}</main>
       </body>
     </html>

@@ -37,7 +37,7 @@ export default function SendMessageForm({
           rows={1}
           value={message}
           onChange={setMessage}
-          placeholder="Me peça dicas de nutrição..."
+          placeholder="Conte-me sobre suas preferências alimentares e objetivos de saúde..."
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
