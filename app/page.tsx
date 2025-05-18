@@ -4,6 +4,7 @@ import AssistantMessage from "@/components/assistant-message";
 import SendMessageForm from "@/components/send-message-form";
 import UserMessage from "@/components/user-message";
 import SettingsButton from "@/components/settings-button";
+import DevelopersMarquee from "@/components/developers-marquee";
 import { useChat } from '@ai-sdk/react';
 import { Fragment, useState } from "react";
 import { Plus, Calendar, Utensils, ChefHat } from "lucide-react";
@@ -51,6 +52,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#f1faee] to-[#f1faee]/80 dark:from-gray-900 dark:to-gray-800">
+      <DevelopersMarquee />
       {!isFirstInteraction && (
         <header className="fixed top-0 inset-x-0 z-50">
           <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#f1faee] via-[#f1faee] to-transparent dark:from-gray-900 dark:via-gray-900 dark:to-transparent">
@@ -74,7 +76,7 @@ export default function Page() {
 
       <div className="flex-1 py-8">
         {isFirstInteraction ? (
-          <div className="flex-1 flex flex-col items-center justify-center gap-1 mt-32">
+          <div className="flex-1 flex flex-col items-center justify-center gap-1 mt-40">
             <div className="flex items-center gap-3">
               <Image
                 src="/images/icone.png"
@@ -87,7 +89,7 @@ export default function Page() {
               />
               <h1 className="text-6xl font-bold text-[#1d3557] dark:text-white">NutriBot</h1>
             </div>
-            <p className="text-xl text-[#457b9d] dark:text-gray-300">Seu assistente nutricionista</p>
+            <p className="text-xl text-[#457b9d] dark:text-gray-300 mt-2">Seu assistente nutricionista</p>
             <div className="w-full max-w-2xl mt-8 px-4 sm:px-0">
               <SendMessageForm 
                 isThinking={isLoading} 
