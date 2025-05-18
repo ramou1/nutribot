@@ -33,6 +33,24 @@ export const MEAL_KEYWORDS = {
   SEAFOOD: ['peixe', 'salmao'] as string[]
 };
 
+export const RESPONSE_KEYWORDS = {
+  WANT_INDICATORS: [
+    'quero', 'gostaria', 'preciso', 'desejo', 'pode', 'queria',
+    'me mostra', 'me mostre', 'mostra', 'mostre', 'manda', 'mande'
+  ] as const,
+  RECOMMENDATION_WORDS: [
+    'recomendações', 'recomendacoes', 'sugestões', 'sugestoes', 
+    'restaurantes', 'lugares', 'opções', 'opcoes'
+  ] as const
+} as const;
+
+export const POSITIVE_RESPONSES = [
+  'sim', 'quero', 'ok', 'claro', 'pode ser', 'gostaria', 'yes', 'mudei de ideia',
+  'agora quero', 'agora eu quero', 'agora gostaria', 'me mostre', 'pode mostrar',
+  'quero ver', 'gostaria de ver', 'me manda', 'manda', 'pode mandar',
+  'recomendacoes', 'recomendações', 'sugestoes', 'sugestões'
+] as const;
+
 export const MESSAGES = {
   NO_RESTAURANTS_FOUND: "Desculpe, não encontrei restaurantes que correspondam exatamente à sua dieta. Você gostaria de especificar melhor suas preferências?",
   NO_MAIN_MEAL_RESTAURANTS: "Desculpe, não encontrei restaurantes para as refeições principais que correspondam à sua dieta. Você gostaria de especificar melhor suas preferências?",
@@ -46,6 +64,17 @@ export const RECOMMENDATION_MESSAGES = {
   SALAD: 'Excelentes opções de saladas e vegetais!',
   SEAFOOD: 'Especialidade em peixes e frutos do mar!',
   DEFAULT: 'Cardápio alinhado com sua dieta!'
+} as const;
+
+export const RECIPE_KEYWORDS = {
+  REQUEST_INDICATORS: [
+    'receita', 'recipe', 'como fazer', 'preparo', 'preparar',
+    'cozinhar', 'fazer', 'ensina', 'ensine'
+  ] as const,
+  DIETARY_RESTRICTIONS: [
+    'sem lactose', 'sem gluten', 'sem leite', 'vegano',
+    'vegetariano', 'low carb', 'sem açúcar', 'sem acucar'
+  ] as const
 } as const;
 
 export const CONFIG = {

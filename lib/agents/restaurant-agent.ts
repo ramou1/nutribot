@@ -2,6 +2,7 @@ import { findRestaurantsByDiet, formatRestaurantRecommendations } from '../servi
 import { UIMessage, streamText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { CONFIG } from '../types/restaurant';
+import { RestaurantService } from '../services/restaurant-service';
 
 export interface RestaurantAgentResponse {
   recommendations: Response;
@@ -113,21 +114,8 @@ function findLastDietPlan(messages: UIMessage[]): string | null {
 }
 
 export async function createRestaurantAgent(messages: UIMessage[]): Promise<RestaurantAgentResponse> {
-  if (!messages?.length) {
-    console.warn('Nenhuma mensagem fornecida');
-    return {
-      recommendations: new Response(
-        JSON.stringify({
-          role: 'assistant',
-          content: "Desculpe, não encontrei um histórico de mensagens para basear as recomendações."
-        }),
-        { headers: { 'Content-Type': 'application/json' } }
-      ),
-      success: false
-    };
-  }
-
   try {
+    console.log('Buscando último plano de dieta...');
     const lastDietPlan = findLastDietPlan(messages);
 
     if (!lastDietPlan) {
@@ -145,7 +133,7 @@ export async function createRestaurantAgent(messages: UIMessage[]): Promise<Rest
     }
 
     console.log('Plano de dieta encontrado, buscando restaurantes...');
-    const restaurants = findRestaurantsByDiet(lastDietPlan);
+    const restaurants = RestaurantService.findRestaurantsByDiet(lastDietPlan);
 
     if (!restaurants.length) {
       console.log('Nenhum restaurante encontrado para o plano de dieta');
@@ -162,7 +150,7 @@ export async function createRestaurantAgent(messages: UIMessage[]): Promise<Rest
     }
 
     console.log(`Encontrados ${restaurants.length} restaurantes compatíveis`);
-    const rawRecommendations = formatRestaurantRecommendations(restaurants);
+    const rawRecommendations = RestaurantService.formatRestaurantRecommendations(restaurants);
     const formattedResponse = await formatRecommendationsWithGPT(rawRecommendations);
 
     return {
