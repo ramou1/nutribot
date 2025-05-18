@@ -37,18 +37,18 @@ export default function SettingsButton() {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 z-50">
+    <div className="fixed bottom-4 left-4 sm:bottom-4 sm:left-4 top-4 right-4 sm:top-auto sm:right-auto z-50">
       <Button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="h-12 w-12 rounded-full bg-[#1d3557] hover:bg-[#1d3557]/90 dark:bg-white dark:hover:bg-white/90 flex items-center justify-center p-0"
+        className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-[#1d3557] hover:bg-[#1d3557]/90 dark:bg-white dark:hover:bg-white/90 flex items-center justify-center p-0 ml-auto sm:ml-0"
       >
-        <Settings className="h-6 w-6 text-white dark:text-[#1d3557]" />
+        <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-[#1d3557]" />
       </Button>
 
       <div 
         ref={cardRef}
-        className={`absolute bottom-16 left-0 w-72 bg-white dark:bg-gray-700 rounded-lg shadow-lg p-4 space-y-4 transition-all duration-200 ${
+        className={`absolute bottom-16 left-0 sm:left-0 right-0 sm:right-auto w-full sm:w-72 bg-white dark:bg-gray-700 rounded-lg shadow-lg p-4 space-y-4 transition-all duration-200 ${
           isOpen 
             ? "opacity-100 translate-y-0" 
             : "opacity-0 translate-y-2 pointer-events-none"
@@ -57,22 +57,22 @@ export default function SettingsButton() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Type className="h-4 w-4 text-[#1d3557] dark:text-white" />
-              <span className="text-sm text-[#1d3557] dark:text-white">Tamanho da Fonte</span>
+              <Type className="h-5 w-5 sm:h-4 sm:w-4 text-[#1d3557] dark:text-white" />
+              <span className="text-base sm:text-sm text-[#1d3557] dark:text-white">Tamanho da Fonte</span>
             </div>
             <div className="flex items-center gap-2">
               <Button
                 onClick={() => handleFontSizeChange(false)}
                 disabled={fontSize <= 12}
-                className="h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 flex items-center justify-center p-0 text-gray-700 dark:text-white"
+                className="h-9 w-9 sm:h-8 sm:w-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 flex items-center justify-center p-0 text-gray-700 dark:text-white"
               >
                 -
               </Button>
-              <span className="text-sm text-[#1d3557] dark:text-white">{fontSize}px</span>
+              <span className="text-base sm:text-sm text-[#1d3557] dark:text-white">{fontSize}px</span>
               <Button
                 onClick={() => handleFontSizeChange(true)}
                 disabled={fontSize >= 18}
-                className="h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 flex items-center justify-center p-0 text-gray-700 dark:text-white"
+                className="h-9 w-9 sm:h-8 sm:w-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 flex items-center justify-center p-0 text-gray-700 dark:text-white"
               >
                 +
               </Button>
@@ -84,15 +84,15 @@ export default function SettingsButton() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               {isDarkMode ? (
-                <Moon className="h-4 w-4 text-[#1d3557] dark:text-white" />
+                <Moon className="h-5 w-5 sm:h-4 sm:w-4 text-[#1d3557] dark:text-white" />
               ) : (
-                <Sun className="h-4 w-4 text-[#1d3557] dark:text-white" />
+                <Sun className="h-5 w-5 sm:h-4 sm:w-4 text-[#1d3557] dark:text-white" />
               )}
-              <span className="text-sm text-[#1d3557] dark:text-white">Modo {isDarkMode ? 'Escuro' : 'Claro'}</span>
+              <span className="text-base sm:text-sm text-[#1d3557] dark:text-white">Modo {isDarkMode ? 'Escuro' : 'Claro'}</span>
             </div>
             <Button
               onClick={toggleDarkMode}
-              className="h-8 px-4 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-sm text-gray-700 dark:text-white"
+              className="h-9 px-4 sm:h-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-base sm:text-sm text-gray-700 dark:text-white"
             >
               {isDarkMode ? 'Claro' : 'Escuro'}
             </Button>

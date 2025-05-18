@@ -88,7 +88,7 @@ export default function Page() {
               <h1 className="text-6xl font-bold text-[#1d3557] dark:text-white">NutriBot</h1>
             </div>
             <p className="text-xl text-[#457b9d] dark:text-gray-300">Seu assistente nutricionista</p>
-            <div className="w-full max-w-2xl mt-8">
+            <div className="w-full max-w-2xl mt-8 px-4 sm:px-0">
               <SendMessageForm 
                 isThinking={isLoading} 
                 message={input}
@@ -97,7 +97,7 @@ export default function Page() {
                 rows={5}
               />
             </div>
-            <div className="w-full max-w-2xl mt-12 grid grid-cols-3 gap-4">
+            <div className="w-full max-w-2xl mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 px-4 sm:px-0">
               {SUGGESTIONS.map((suggestion, index) => (
                 <button
                   key={index}
@@ -110,9 +110,9 @@ export default function Page() {
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <suggestion.icon className="h-5 w-5" />
-                    <h3 className="font-bold text-lg">{suggestion.title}</h3>
+                    <h3 className="font-bold text-xl sm:text-lg">{suggestion.title}</h3>
                   </div>
-                  <p className="text-sm opacity-90">{suggestion.description}</p>
+                  <p className="text-base sm:text-sm opacity-90">{suggestion.description}</p>
                 </button>
               ))}
             </div>
