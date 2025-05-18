@@ -6,7 +6,7 @@ import UserMessage from "@/components/user-message";
 import SettingsButton from "@/components/settings-button";
 import { useChat } from '@ai-sdk/react';
 import { Fragment, useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Calendar, Utensils, ChefHat } from "lucide-react";
 import { Button } from "@/components/button";
 import Image from "next/image";
 
@@ -14,17 +14,20 @@ const SUGGESTIONS = [
   {
     title: "Plano Alimentar",
     description: "Crie um plano alimentar semanal para mim que sou diabético",
-    color: "#e63946"
+    color: "#e63946",
+    icon: Calendar
   },
   {
     title: "Restaurantes",
     description: "Encontre restaurantes com opções veganas ou vegetarianas",
-    color: "#457b9d"
+    color: "#457b9d",
+    icon: Utensils
   },
   {
     title: "Receitas",
     description: "Sugira receitas sem lactose e sem glúten",
-    color: "#1d3557"
+    color: "#1d3557",
+    icon: ChefHat
   }
 ];
 
@@ -99,13 +102,16 @@ export default function Page() {
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion.description)}
-                  className="p-4 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1 dark:shadow-gray-800"
+                  className="p-4 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1 dark:shadow-gray-800 flex flex-col items-start"
                   style={{ 
                     backgroundColor: suggestion.color,
                     color: '#f1faee'
                   }}
                 >
-                  <h3 className="font-bold mb-2">{suggestion.title}</h3>
+                  <div className="flex items-center gap-2 mb-2">
+                    <suggestion.icon className="h-5 w-5" />
+                    <h3 className="font-bold text-lg">{suggestion.title}</h3>
+                  </div>
                   <p className="text-sm opacity-90">{suggestion.description}</p>
                 </button>
               ))}
