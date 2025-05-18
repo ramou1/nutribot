@@ -7,6 +7,7 @@ import { useChat } from '@ai-sdk/react';
 import { Fragment, useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/button";
+import Image from "next/image";
 
 const SUGGESTIONS = [
   {
@@ -49,12 +50,20 @@ export default function Page() {
       {!isFirstInteraction && (
         <header className="fixed top-0 inset-x-0 z-50">
           <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#f1faee] via-[#f1faee] to-transparent">
-            <h1 
-              className="text-2xl font-bold cursor-pointer hover:opacity-80 text-[#1d3557]" 
-              onClick={handleNewChat}
-            >
-              NutriBot
-            </h1>
+            <div className="flex items-center gap-2 cursor-pointer hover:opacity-80" onClick={handleNewChat}>
+              <Image
+                src="/images/icone.png"
+                alt="NutriBot"
+                width={32}
+                height={32}
+                className="rounded-full"
+                quality={100}
+                priority
+              />
+              <h1 className="text-2xl font-bold text-[#1d3557]">
+                NutriBot
+              </h1>
+            </div>
           </div>
         </header>
       )}
@@ -62,7 +71,18 @@ export default function Page() {
       <div className="flex-1 py-8">
         {isFirstInteraction ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-1 mt-32">
-            <h1 className="text-6xl font-bold text-[#1d3557]">NutriBot</h1>
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/icone.png"
+                alt="NutriBot"
+                width={48}
+                height={48}
+                className="rounded-full"
+                quality={100}
+                priority
+              />
+              <h1 className="text-6xl font-bold text-[#1d3557]">NutriBot</h1>
+            </div>
             <p className="text-xl text-[#457b9d]">Seu assistente nutricionista</p>
             <div className="w-full max-w-2xl mt-8">
               <SendMessageForm 
