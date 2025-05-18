@@ -65,7 +65,7 @@ export default function Page() {
         <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-[#fafafa] via-[#f8f8f8] to-[#f5f5f5] dark:from-[#1a1a1a] dark:via-[#2d3a2d] dark:to-[#344e41] -z-10" />
         <DevelopersMarquee />
         
-        <div className="fixed top-4 right-4 sm:top-16 sm:right-12 flex flex-col sm:flex-col gap-2 z-[60]">
+        <div className="fixed top-4 right-4 sm:top-16 sm:right-12 flex flex-row sm:flex-col gap-2 z-[60]">
           <AgentsButton />
           <SettingsButton />
         </div>
