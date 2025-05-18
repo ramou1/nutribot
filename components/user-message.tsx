@@ -15,7 +15,7 @@ export default function UserMessage({ children }: { children: React.ReactNode })
         {children}
       </div>
       <Image
-        src="/images/user-avatar-48.png"
+        src="/images/user-avatar.png"
         alt="Você"
         width={48}
         height={48}

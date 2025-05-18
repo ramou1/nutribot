@@ -91,7 +91,7 @@ export default function Page() {
           <div className="flex-1 flex flex-col items-center justify-center gap-1 mt-40">
             <div className="flex items-center gap-3">
               <Image
-                src="/images/icone-48.png"
+                src="/images/icone.png"
                 alt="NutriBot"
                 width={48}
                 height={48}

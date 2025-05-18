@@ -20,7 +20,7 @@ export default function AssistantMessage({ content }: { content: string }) {
   return (
     <div className="flex justify-start gap-4">
       <Image
-        src="/images/nutribot-avatar-48.png"
+        src="/images/nutribot-avatar.png"
         alt="NutriBot"
         width={48}
         height={48}
