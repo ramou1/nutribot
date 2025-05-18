@@ -52,7 +52,7 @@ export default function SendMessageForm({
             }
           }}
           className={cn(
-            "drop-shadow-lg w-full bg-white dark:bg-gray-800 rounded-3xl border-0 p-4 pr-16 mb-4",
+            "drop-shadow-lg w-full bg-white dark:bg-gray-700 rounded-3xl border-0 p-4 pr-16 mb-4",
             "resize-none focus-visible:outline-none text-[#1d3557] dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
           )}
           style={{ fontSize: `${fontSize}px` }}

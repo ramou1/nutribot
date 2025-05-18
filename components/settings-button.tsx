@@ -48,7 +48,7 @@ export default function SettingsButton() {
 
       <div 
         ref={cardRef}
-        className={`absolute bottom-16 left-0 w-72 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 space-y-4 transition-all duration-200 ${
+        className={`absolute bottom-16 left-0 w-72 bg-white dark:bg-gray-700 rounded-lg shadow-lg p-4 space-y-4 transition-all duration-200 ${
           isOpen 
             ? "opacity-100 translate-y-0" 
             : "opacity-0 translate-y-2 pointer-events-none"
@@ -64,7 +64,7 @@ export default function SettingsButton() {
               <Button
                 onClick={() => handleFontSizeChange(false)}
                 disabled={fontSize <= 12}
-                className="h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 flex items-center justify-center p-0 text-gray-700 dark:text-white"
+                className="h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 flex items-center justify-center p-0 text-gray-700 dark:text-white"
               >
                 -
               </Button>
@@ -72,7 +72,7 @@ export default function SettingsButton() {
               <Button
                 onClick={() => handleFontSizeChange(true)}
                 disabled={fontSize >= 18}
-                className="h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 flex items-center justify-center p-0 text-gray-700 dark:text-white"
+                className="h-8 w-8 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 flex items-center justify-center p-0 text-gray-700 dark:text-white"
               >
                 +
               </Button>
@@ -92,7 +92,7 @@ export default function SettingsButton() {
             </div>
             <Button
               onClick={toggleDarkMode}
-              className="h-8 px-4 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-sm text-gray-700 dark:text-white"
+              className="h-8 px-4 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-sm text-gray-700 dark:text-white"
             >
               {isDarkMode ? 'Claro' : 'Escuro'}
             </Button>
