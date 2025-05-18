@@ -9,7 +9,7 @@ export default function UserMessage({ children }: { children: React.ReactNode })
   return (
     <div className="flex justify-end gap-4">
       <div 
-        className="bg-[#588157] text-white rounded-2xl px-4 py-2 max-w-[85%] shadow-sm"
+        className="bg-[#588157] text-white rounded-2xl rounded-tr-none px-4 py-2 max-w-[85%]"
         style={{ fontSize: `${fontSize}px` }}
       >
         {children}

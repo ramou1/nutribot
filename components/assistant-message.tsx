@@ -29,7 +29,7 @@ export default function AssistantMessage({ content }: { content: string }) {
       />
       <div className="relative group">
         <div 
-          className="bg-white dark:bg-[#2a2a2a] rounded-2xl px-4 py-2 max-w-[85%] shadow-sm prose dark:prose-invert prose-sm max-w-none relative flex items-start gap-2 group"
+          className="bg-white dark:bg-[#2a2a2a] rounded-2xl rounded-tl-none px-4 py-2 max-w-[85%] prose dark:prose-invert prose-sm max-w-none relative flex items-start gap-2 group"
           style={{ fontSize: `${fontSize}px` }}
         >
           <div className="flex-1">
