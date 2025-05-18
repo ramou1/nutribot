@@ -91,8 +91,9 @@ export default function AgentsButton() {
                   ChefBot
                 </h4>
                 <p className="text-sm text-[#588157] dark:text-[#b0c4b1]">
-                  Sua assistente culinária, especialista em receitas, técnicas de cozinha 
-                  e adaptações para diferentes necessidades alimentares.
+                  Seu assistente de restaurantes, especializado em encontrar estabelecimentos 
+                  que atendam às suas necessidades alimentares específicas, 
+                  trabalhando em conjunto com o plano alimentar criado pelo NutriBot.
                 </p>
               </div>
             </div>
