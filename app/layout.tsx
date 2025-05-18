@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { effra } from "./fonts";
 import "./globals.css";
+import { SettingsProvider } from "@/lib/settings-context";
 
 export const metadata: Metadata = {
-  title: "NutriBot",
-  description: "Seu assistente nutricionista",
+  title: "NutriBot - Seu assistente nutricionista",
+  description: "Um assistente nutricionista personalizado para ajudar você a alcançar seus objetivos de saúde.",
   icons: {
     icon: [
       {
@@ -33,12 +34,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="pt-BR">
-      <body className={effra.className}>{children}</body>
+    <html lang="pt-BR" className="dark:bg-gray-900">
+      <body className={`${effra.variable} font-sans antialiased`}>
+        <SettingsProvider>
+          {children}
+        </SettingsProvider>
+      </body>
     </html>
   );
 }

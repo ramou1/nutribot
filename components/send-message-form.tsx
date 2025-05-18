@@ -1,64 +1,60 @@
-import { cn } from "@/lib/utils";
-import { ChangeEvent } from "react";
-import ReactTextareaAutosize from "react-textarea-autosize";
-import { Button } from "./button";
+"use client";
+
+import { useSettings } from "@/lib/settings-context";
+import { Button } from "@/components/button";
 import { ArrowUp } from "lucide-react";
+import ReactTextareaAutosize from "react-textarea-autosize";
+
+interface SendMessageFormProps {
+  isThinking: boolean;
+  message: string;
+  setMessage: (e: any) => void;
+  onSendMessage: () => Promise<void>;
+  rows?: number;
+}
 
 export default function SendMessageForm({
   isThinking,
   message,
   setMessage,
   onSendMessage,
-  rows = 1,
-}: {
-  isThinking: boolean;
-  message: string;
-  setMessage: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  onSendMessage: () => Promise<void>;
-  rows?: number;
-}) {
-  const handleSubmit = async () => {
-    const value = message.trim();
-    if (!value) return;
+  rows = 1
+}: SendMessageFormProps) {
+  const { fontSize } = useSettings();
 
-    await onSendMessage();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (message.trim() && !isThinking) {
+      await onSendMessage();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
   };
 
   return (
-    <div>
-      <form
-        className="relative"
-        onSubmit={async (e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
+    <form onSubmit={handleSubmit} className="relative">
+      <ReactTextareaAutosize
+        value={message}
+        onChange={setMessage}
+        onKeyDown={handleKeyDown}
+        placeholder="Me conte sobre suas restrições alimentares, necessidades ou objetivos de saúde..."
+        className="w-full rounded-2xl border border-[#d1d1d1] bg-[#ffffff] dark:bg-[#2d2d2d] dark:border-[#404040] px-4 py-3 pr-12 text-[#344e41] dark:text-[#e9e9e9] placeholder:text-[#666666]/50 dark:placeholder:text-[#9e9e9e]/50 focus:outline-none focus:ring-2 focus:ring-[#588157] dark:focus:ring-[#3a5a40] resize-none"
+        style={{ fontSize: `${fontSize}px` }}
+        rows={rows}
+        maxRows={10}
+      />
+      <Button
+        type="submit"
+        disabled={!message.trim() || isThinking}
+        className="absolute right-1 top-1 h-10 px-3 rounded-xl bg-[#588157] hover:bg-[#3a5a40] dark:bg-[#3a5a40] dark:hover:bg-[#344e41] disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <ReactTextareaAutosize
-          autoFocus
-          maxRows={8}
-          rows={rows}
-          value={message}
-          onChange={setMessage}
-          placeholder="Me conte sobre suas restrições alimentares, preferências e objetivos de saúde..."
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSubmit();
-            }
-          }}
-          className={cn(
-            "drop-shadow-lg w-full text-base bg-white rounded-3xl border-0 p-4 pr-16 mb-4",
-            "resize-none focus-visible:outline-none"
-          )}
-        />
-        <Button 
-          disabled={isThinking || !message.trim()} 
-          type="submit" 
-          className="absolute right-1 top-1 h-12 w-12 p-0 rounded-full flex items-center justify-center"
-        >
-          <ArrowUp className="h-5 w-5" />
-        </Button>
-      </form>
-    </div>
+        <ArrowUp className="h-4 w-4 text-white" />
+      </Button>
+    </form>
   );
 }
