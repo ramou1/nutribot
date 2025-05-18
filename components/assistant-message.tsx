@@ -18,7 +18,7 @@ export default function AssistantMessage({ content }: { content: string }) {
   return (
     <Message theirs={true}>
       <div className="flex items-start gap-4">
-        <div className="flex-1 prose prose-sm max-w-none">
+        <div className="flex-1 prose prose-sm max-w-none text-[15px]">
           <ReactMarkdown
             components={{
               p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
