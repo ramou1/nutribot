@@ -5,40 +5,46 @@ import SendMessageForm from "@/components/send-message-form";
 import UserMessage from "@/components/user-message";
 import SettingsButton from "@/components/settings-button";
 import DevelopersMarquee from "@/components/developers-marquee";
-import { useChat } from '@ai-sdk/react';
+import { useChat } from "@ai-sdk/react";
 import { Fragment, useState } from "react";
-import { Plus, Calendar, Utensils, ChefHat } from "lucide-react";
-import { Button } from "@/components/button";
+import { Calendar, Utensils, ChefHat } from "lucide-react";
 import Image from "next/image";
 
 const SUGGESTIONS = [
   {
     title: "Plano Alimentar",
     description: "Crie um plano alimentar semanal para mim que sou diabético",
-    color: "#e63946",
-    icon: Calendar
+    color: "#588157",
+    icon: Calendar,
   },
   {
     title: "Restaurantes",
     description: "Encontre restaurantes com opções veganas ou vegetarianas",
-    color: "#457b9d",
-    icon: Utensils
+    color: "#3a5a40",
+    icon: Utensils,
   },
   {
     title: "Receitas",
     description: "Sugira receitas sem lactose e sem glúten",
-    color: "#1d3557",
-    icon: ChefHat
-  }
+    color: "#344e41",
+    icon: ChefHat,
+  },
 ];
 
 export default function Page() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading, setMessages } = useChat();
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    setMessages,
+  } = useChat();
   const [isFirstInteraction, setIsFirstInteraction] = useState(true);
 
   const handleFirstMessage = async () => {
     setIsFirstInteraction(false);
-    await handleSubmit(new Event('submit') as any);
+    await handleSubmit(new Event("submit") as any);
   };
 
   const handleNewChat = () => {
@@ -51,12 +57,16 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#f1faee] to-[#f1faee]/80 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-[#e9e9e9] dark:bg-[#1a1a1a]">
+      <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-[#e9e9e9] via-[#e0e0e0] to-[#d4d4d4] dark:from-[#1a1a1a] dark:via-[#2d3a2d] dark:to-[#344e41] -z-10" />
       <DevelopersMarquee />
       {!isFirstInteraction && (
         <header className="fixed top-0 inset-x-0 z-50">
-          <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#f1faee] via-[#f1faee] to-transparent dark:from-gray-900 dark:via-gray-900 dark:to-transparent">
-            <div className="flex items-center gap-2 cursor-pointer hover:opacity-80" onClick={handleNewChat}>
+          <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#e9e9e9] via-[#e9e9e9] to-transparent dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-transparent">
+            <div
+              className="flex items-center gap-2 cursor-pointer hover:opacity-80"
+              onClick={handleNewChat}
+            >
               <Image
                 src="/images/icone.png"
                 alt="NutriBot"
@@ -66,7 +76,7 @@ export default function Page() {
                 quality={100}
                 priority
               />
-              <h1 className="text-2xl font-bold text-[#1d3557] dark:text-white">
+              <h1 className="text-2xl font-bold text-[#344e41] dark:text-[#a3b18a]">
                 NutriBot
               </h1>
             </div>
@@ -87,12 +97,16 @@ export default function Page() {
                 quality={100}
                 priority
               />
-              <h1 className="text-6xl font-bold text-[#1d3557] dark:text-white">NutriBot</h1>
+              <h1 className="text-6xl font-bold text-[#344e41] dark:text-[#a3b18a]">
+                NutriBot
+              </h1>
             </div>
-            <p className="text-xl text-[#457b9d] dark:text-gray-300 mt-2">Seu assistente nutricionista</p>
+            <p className="text-xl text-[#588157] dark:text-[#b0c4b1] mt-2">
+              Seu assistente nutricionista
+            </p>
             <div className="w-full max-w-2xl mt-8 px-4 sm:px-0">
-              <SendMessageForm 
-                isThinking={isLoading} 
+              <SendMessageForm
+                isThinking={isLoading}
                 message={input}
                 setMessage={handleInputChange}
                 onSendMessage={handleFirstMessage}
@@ -105,16 +119,20 @@ export default function Page() {
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion.description)}
                   className="p-4 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1 dark:shadow-gray-800 flex flex-col items-start"
-                  style={{ 
+                  style={{
                     backgroundColor: suggestion.color,
-                    color: '#f1faee'
+                    color: "#f1faee",
                   }}
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <suggestion.icon className="h-5 w-5" />
-                    <h3 className="font-bold text-xl sm:text-lg">{suggestion.title}</h3>
+                    <h3 className="font-bold text-xl sm:text-lg">
+                      {suggestion.title}
+                    </h3>
                   </div>
-                  <p className="text-base sm:text-sm opacity-90">{suggestion.description}</p>
+                  <p className="text-base sm:text-sm opacity-90">
+                    {suggestion.description}
+                  </p>
                 </button>
               ))}
             </div>
@@ -134,14 +152,14 @@ export default function Page() {
                 ))}
               </div>
             </div>
-            <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-[#f1faee] via-[#f1faee] to-transparent dark:from-gray-900 dark:via-gray-800 dark:to-transparent pt-20 pb-4">
+            <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-[#e9e9e9] via-[#e9e9e9] to-transparent dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-transparent pt-20 pb-4">
               <div className="container max-w-screen-md mx-auto">
-                <SendMessageForm 
-                  isThinking={isLoading} 
+                <SendMessageForm
+                  isThinking={isLoading}
                   message={input}
                   setMessage={handleInputChange}
                   onSendMessage={async () => {
-                    handleSubmit(new Event('submit') as any);
+                    handleSubmit(new Event("submit") as any);
                     return Promise.resolve();
                   }}
                   rows={1}

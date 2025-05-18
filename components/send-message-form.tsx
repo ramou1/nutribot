@@ -1,76 +1,60 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { ChangeEvent } from "react";
-import ReactTextareaAutosize from "react-textarea-autosize";
-import { Button } from "./button";
-import { ArrowUp } from "lucide-react";
 import { useSettings } from "@/lib/settings-context";
+import { Button } from "@/components/button";
+import { ArrowUp } from "lucide-react";
+import ReactTextareaAutosize from "react-textarea-autosize";
+
+interface SendMessageFormProps {
+  isThinking: boolean;
+  message: string;
+  setMessage: (e: any) => void;
+  onSendMessage: () => Promise<void>;
+  rows?: number;
+}
 
 export default function SendMessageForm({
   isThinking,
   message,
   setMessage,
   onSendMessage,
-  rows = 1,
-}: {
-  isThinking: boolean;
-  message: string;
-  setMessage: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  onSendMessage: () => Promise<void>;
-  rows?: number;
-}) {
+  rows = 1
+}: SendMessageFormProps) {
   const { fontSize } = useSettings();
 
-  const handleSubmit = async () => {
-    const value = message.trim();
-    if (!value) return;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (message.trim() && !isThinking) {
+      await onSendMessage();
+    }
+  };
 
-    await onSendMessage();
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
   };
 
   return (
-    <div>
-      <form
-        className="relative"
-        onSubmit={async (e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
+    <form onSubmit={handleSubmit} className="relative">
+      <ReactTextareaAutosize
+        value={message}
+        onChange={setMessage}
+        onKeyDown={handleKeyDown}
+        placeholder="Digite sua mensagem..."
+        className="w-full rounded-2xl border border-[#d1d1d1] bg-[#ffffff] dark:bg-[#2d2d2d] dark:border-[#404040] px-4 py-3 pr-12 text-[#344e41] dark:text-[#e9e9e9] placeholder:text-[#666666]/50 dark:placeholder:text-[#9e9e9e]/50 focus:outline-none focus:ring-2 focus:ring-[#588157] dark:focus:ring-[#3a5a40] resize-none"
+        style={{ fontSize: `${fontSize}px` }}
+        rows={rows}
+        maxRows={10}
+      />
+      <Button
+        type="submit"
+        disabled={!message.trim() || isThinking}
+        className="absolute right-1 top-1 h-10 px-3 rounded-xl bg-[#588157] hover:bg-[#3a5a40] dark:bg-[#3a5a40] dark:hover:bg-[#344e41] disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <ReactTextareaAutosize
-          autoFocus
-          maxRows={8}
-          rows={rows}
-          value={message}
-          onChange={setMessage}
-          placeholder="Me conte sobre suas restrições alimentares, preferências e objetivos de saúde..."
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSubmit();
-            }
-          }}
-          className={cn(
-            "drop-shadow-lg w-full bg-white dark:bg-gray-700 rounded-3xl border-0 p-4 pr-16 mb-4",
-            "resize-none focus-visible:outline-none text-[#1d3557] dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
-          )}
-          style={{ fontSize: `${fontSize}px` }}
-        />
-        <Button 
-          type="submit" 
-          disabled={isThinking || !message.trim()} 
-          className="absolute right-1 top-1 h-12 w-12 p-0 rounded-full flex items-center justify-center bg-[#1d3557] hover:bg-[#1d3557]/90 dark:bg-white dark:hover:bg-white/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-        >
-          {isThinking ? (
-            <div className="flex items-center justify-center">
-              <div className="w-5 h-5 border-2 border-white dark:border-[#1d3557] border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          ) : (
-            <ArrowUp className="h-5 w-5 text-white dark:text-[#1d3557]" />
-          )}
-        </Button>
-      </form>
-    </div>
+        <ArrowUp className="h-4 w-4 text-white" />
+      </Button>
+    </form>
   );
 }
