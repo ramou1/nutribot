@@ -118,7 +118,7 @@ export default function Page() {
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion.description)}
-                  className="p-4 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1 dark:shadow-gray-800 flex flex-col items-start"
+                  className="p-4 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1 shadow-[#3a5a40]/20 flex flex-col items-start"
                   style={{
                     backgroundColor: suggestion.color,
                     color: "#f1faee",

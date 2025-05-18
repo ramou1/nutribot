@@ -42,7 +42,7 @@ export default function SendMessageForm({
         value={message}
         onChange={setMessage}
         onKeyDown={handleKeyDown}
-        placeholder="Digite sua mensagem..."
+        placeholder="Me conte sobre suas restrições alimentares, necessidades ou objetivos de saúde..."
         className="w-full rounded-2xl border border-[#d1d1d1] bg-[#ffffff] dark:bg-[#2d2d2d] dark:border-[#404040] px-4 py-3 pr-12 text-[#344e41] dark:text-[#e9e9e9] placeholder:text-[#666666]/50 dark:placeholder:text-[#9e9e9e]/50 focus:outline-none focus:ring-2 focus:ring-[#588157] dark:focus:ring-[#3a5a40] resize-none"
         style={{ fontSize: `${fontSize}px` }}
         rows={rows}
