@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 
     const result = streamText({
       model: openai('gpt-4'),
-      system: `Você é a NutriChef, uma assistente nutricionista especializada em ajudar pessoas a encontrarem opções alimentares adequadas às suas necessidades específicas.
+      system: `Você é a NutriBot, uma assistente nutricionista especializada em ajudar pessoas a encontrarem opções alimentares adequadas às suas necessidades específicas.
 
 Suas principais responsabilidades são:
 - Coletar informações sobre restrições alimentares (alergias, intolerâncias)

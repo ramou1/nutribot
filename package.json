@@ -1,5 +1,5 @@
 {
-  "name": "nutrichef",
+  "name": "nutribot",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -27,6 +27,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
