@@ -1,5 +1,30 @@
 import { streamText, UIMessage } from 'ai';
 import { openai } from '@ai-sdk/openai';
+import { createDietAgent } from '@/lib/agents/diet-agent';
+import { createRestaurantAgent } from '@/lib/agents/restaurant-agent';
+
+const positiveResponses = ['sim', 'quero', 'ok', 'claro', 'pode ser', 'gostaria', 'yes'];
+
+function isPositiveResponse(message: string): boolean {
+  const normalizedMessage = message.toLowerCase().trim();
+  return positiveResponses.some(response => 
+    normalizedMessage === response ||
+    normalizedMessage.includes(response)
+  );
+}
+
+function isRestaurantQuestion(message: string): boolean {
+  const normalizedMessage = message.toLowerCase().trim();
+  const hasRecommendation = 
+    normalizedMessage.includes('recomendações') || 
+    normalizedMessage.includes('recomendacoes') ||
+    normalizedMessage.includes('sugestões') ||
+    normalizedMessage.includes('sugestoes');
+    
+  return hasRecommendation && 
+         normalizedMessage.includes('restaurantes') && 
+         normalizedMessage.includes('dieta');
+}
 
 export async function POST(request: Request) {
   const { messages }: { messages: UIMessage[] } = await request.json();
@@ -22,36 +47,93 @@ export async function POST(request: Request) {
 
     // Truncate to the last 8 messages
     let truncatedMessages = messages.slice(-8);
+    const lastMessage = truncatedMessages[truncatedMessages.length - 1];
+    const previousMessage = truncatedMessages[truncatedMessages.length - 2];
 
-    const result = streamText({
-      model: openai('gpt-4'),
-      system: `Você é a NutriBot, uma assistente nutricionista especializada em ajudar pessoas a encontrarem opções alimentares adequadas às suas necessidades específicas.
+    // Check if user is asking for restaurant recommendations
+    const isAskingForRestaurants = 
+      previousMessage?.content && 
+      isRestaurantQuestion(previousMessage.content) &&
+      isPositiveResponse(lastMessage.content);
 
-Suas principais responsabilidades são:
-- Coletar informações sobre restrições alimentares (alergias, intolerâncias)
-- Entender preferências pessoais e objetivos de saúde
-- Recomendar pratos específicos dos cardápios de restaurantes parceiros
-- Sugerir adaptações possíveis em pratos existentes
-- Fornecer informações nutricionais aproximadas
-- Manter um histórico de pedidos para refinar recomendações futuras
+    if (isAskingForRestaurants) {
+      console.log('Detectada solicitação de restaurantes:', {
+        previousMessage: previousMessage.content,
+        userResponse: lastMessage.content,
+        isRestaurantQuestion: isRestaurantQuestion(previousMessage.content),
+        isPositiveResponse: isPositiveResponse(lastMessage.content)
+      });
+      
+      // Use the Restaurant Agent to get recommendations
+      const { recommendations, success } = await createRestaurantAgent(truncatedMessages);
+      
+      if (!success) {
+        console.log('Falha ao obter recomendações de restaurantes');
+        return streamText({
+          model: openai('gpt-4'),
+          messages: [
+            {
+              role: 'assistant',
+              content: 'Desculpe, não foi possível encontrar recomendações de restaurantes no momento. Por favor, tente novamente.'
+            }
+          ],
+          maxTokens: 100
+        }).toDataStreamResponse();
+      }
 
-Você deve:
-- Manter o foco em nutrição e alimentação saudável
-- Ser profissional e acolhedora
-- Fornecer informações precisas e baseadas em evidências
-- Respeitar restrições alimentares e preferências do usuário
-- Sugerir alternativas quando necessário
-- Explicar os benefícios nutricionais das recomendações
+      console.log('Recomendações obtidas com sucesso');
+      return streamText({
+        model: openai('gpt-4'),
+        messages: [
+          {
+            role: 'assistant',
+            content: recommendations
+          }
+        ],
+        maxTokens: 1000
+      }).toDataStreamResponse();
+    }
 
-Se o usuário tentar desviar do assunto de nutrição, gentilmente redirecione a conversa para o tema de alimentação saudável e bem-estar.`,
-      messages: truncatedMessages,
-      maxTokens: 500,
-    });
+    // If not asking for restaurants, use the Diet Agent
+    const dietResponse = await createDietAgent(truncatedMessages);
+    
+    if (dietResponse.type === 'askingForRestaurants') {
+      console.log('Diet Agent sinalizou pedido de recomendações');
+      // Use the Restaurant Agent to get recommendations
+      const { recommendations, success } = await createRestaurantAgent(truncatedMessages);
+      
+      if (!success) {
+        console.log('Falha ao obter recomendações de restaurantes');
+        return streamText({
+          model: openai('gpt-4'),
+          messages: [
+            {
+              role: 'assistant',
+              content: 'Desculpe, não foi possível encontrar recomendações de restaurantes no momento. Por favor, tente novamente.'
+            }
+          ],
+          maxTokens: 100
+        }).toDataStreamResponse();
+      }
 
-    return result.toDataStreamResponse();
+      console.log('Recomendações obtidas com sucesso');
+      return streamText({
+        model: openai('gpt-4'),
+        messages: [
+          {
+            role: 'assistant',
+            content: recommendations
+          }
+        ],
+        maxTokens: 1000
+      }).toDataStreamResponse();
+    }
+
+    return dietResponse.toDataStreamResponse();
+
   } catch (error) {
-    console.error(error);
-    return new Response(JSON.stringify({ error: "Failed to get response from OpenAI" }), { 
+    console.error('Erro no processamento:', error);
+    return new Response(JSON.stringify({ error: "Failed to process request" }), { 
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
