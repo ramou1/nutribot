@@ -7,7 +7,7 @@ const positiveResponses = ['sim', 'quero', 'ok', 'claro', 'pode ser', 'gostaria'
 
 function isPositiveResponse(message: string): boolean {
   const normalizedMessage = message.toLowerCase().trim();
-  return positiveResponses.some(response => 
+  return positiveResponses.some(response =>
     normalizedMessage === response ||
     normalizedMessage.includes(response)
   );
@@ -15,22 +15,61 @@ function isPositiveResponse(message: string): boolean {
 
 function isRestaurantQuestion(message: string): boolean {
   const normalizedMessage = message.toLowerCase().trim();
-  const hasRecommendation = 
-    normalizedMessage.includes('recomendações') || 
+  const hasRecommendation =
+    normalizedMessage.includes('recomendações') ||
     normalizedMessage.includes('recomendacoes') ||
     normalizedMessage.includes('sugestões') ||
     normalizedMessage.includes('sugestoes');
-    
-  return hasRecommendation && 
-         normalizedMessage.includes('restaurantes') && 
-         normalizedMessage.includes('dieta');
+
+  return hasRecommendation &&
+    normalizedMessage.includes('restaurantes') &&
+    normalizedMessage.includes('dieta');
+}
+
+// Adicionar função para remover as tags de URL
+function removeUrlTags(text: string): string {
+  return text.replace(/<URL>|<\/URL>/g, '');
+}
+
+// Função para processar a resposta do GPT e remover as tags de URL
+async function processGPTResponse(response: Response): Promise<Response> {
+  const reader = response.body?.getReader();
+  if (!reader) return response;
+
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder();
+
+  return new Response(
+    new ReadableStream({
+      async start(controller) {
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const text = decoder.decode(value);
+            const cleanText = removeUrlTags(text);
+            controller.enqueue(encoder.encode(cleanText));
+          }
+          controller.close();
+        } catch (error) {
+          controller.error(error);
+        }
+      },
+    }),
+    {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+      },
+    }
+  );
 }
 
 export async function POST(request: Request) {
   const { messages }: { messages: UIMessage[] } = await request.json();
 
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
-    return new Response(JSON.stringify({ error: "Messages are required" }), { 
+    return new Response(JSON.stringify({ error: "Messages are required" }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -39,7 +78,7 @@ export async function POST(request: Request) {
   try {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "OpenAI API key is required" }), { 
+      return new Response(JSON.stringify({ error: "OpenAI API key is required" }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
@@ -51,89 +90,31 @@ export async function POST(request: Request) {
     const previousMessage = truncatedMessages[truncatedMessages.length - 2];
 
     // Check if user is asking for restaurant recommendations
-    const isAskingForRestaurants = 
-      previousMessage?.content && 
+    const isAskingForRestaurants =
+      previousMessage?.content &&
       isRestaurantQuestion(previousMessage.content) &&
       isPositiveResponse(lastMessage.content);
 
     if (isAskingForRestaurants) {
-      console.log('Detectada solicitação de restaurantes:', {
-        previousMessage: previousMessage.content,
-        userResponse: lastMessage.content,
-        isRestaurantQuestion: isRestaurantQuestion(previousMessage.content),
-        isPositiveResponse: isPositiveResponse(lastMessage.content)
-      });
-      
-      // Use the Restaurant Agent to get recommendations
+      console.log('Detectada solicitação de restaurantes');
       const { recommendations, success } = await createRestaurantAgent(truncatedMessages);
-      
-      if (!success) {
-        console.log('Falha ao obter recomendações de restaurantes');
-        return streamText({
-          model: openai('gpt-4'),
-          messages: [
-            {
-              role: 'assistant',
-              content: 'Desculpe, não foi possível encontrar recomendações de restaurantes no momento. Por favor, tente novamente.'
-            }
-          ],
-          maxTokens: 100
-        }).toDataStreamResponse();
-      }
-
-      console.log('Recomendações obtidas com sucesso');
-      return streamText({
-        model: openai('gpt-4'),
-        messages: [
-          {
-            role: 'assistant',
-            content: recommendations
-          }
-        ],
-        maxTokens: 1000
-      }).toDataStreamResponse();
+      return recommendations;
     }
 
     // If not asking for restaurants, use the Diet Agent
     const dietResponse = await createDietAgent(truncatedMessages);
-    
+
     if (dietResponse.type === 'askingForRestaurants') {
       console.log('Diet Agent sinalizou pedido de recomendações');
-      // Use the Restaurant Agent to get recommendations
       const { recommendations, success } = await createRestaurantAgent(truncatedMessages);
-      
-      if (!success) {
-        console.log('Falha ao obter recomendações de restaurantes');
-        return streamText({
-          model: openai('gpt-4'),
-          messages: [
-            {
-              role: 'assistant',
-              content: 'Desculpe, não foi possível encontrar recomendações de restaurantes no momento. Por favor, tente novamente.'
-            }
-          ],
-          maxTokens: 100
-        }).toDataStreamResponse();
-      }
-
-      console.log('Recomendações obtidas com sucesso');
-      return streamText({
-        model: openai('gpt-4'),
-        messages: [
-          {
-            role: 'assistant',
-            content: recommendations
-          }
-        ],
-        maxTokens: 1000
-      }).toDataStreamResponse();
+      return recommendations;
     }
 
     return dietResponse.toDataStreamResponse();
 
   } catch (error) {
     console.error('Erro no processamento:', error);
-    return new Response(JSON.stringify({ error: "Failed to process request" }), { 
+    return new Response(JSON.stringify({ error: "Failed to process request" }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });

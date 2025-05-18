@@ -37,7 +37,7 @@ export const MESSAGES = {
   NO_RESTAURANTS_FOUND: "Desculpe, não encontrei restaurantes que correspondam exatamente à sua dieta. Você gostaria de especificar melhor suas preferências?",
   NO_MAIN_MEAL_RESTAURANTS: "Desculpe, não encontrei restaurantes para as refeições principais que correspondam à sua dieta. Você gostaria de especificar melhor suas preferências?",
   RECOMMENDATIONS_HEADER: "🍽️ **Recomendações de Restaurantes para Hoje**\n\nSelecionei os melhores restaurantes para suas refeições principais:\n\n",
-  DAILY_TIP: "\n💡 **Dica do dia:**\nLembre-se de informar que está seguindo uma dieta low-carb ao fazer seu pedido."
+  DAILY_TIP: "\n💡 **Dica do dia:**\nLembre-se de informar que está seguindo uma dieta ao fazer seu pedido."
 } as const;
 
 export const RECOMMENDATION_MESSAGES = {

@@ -66,17 +66,27 @@ class RestaurantService {
   }
 
   private static formatMealRecommendation(match: MealMatch): string {
+    // Validação inicial dos dados necessários
     if (!match?.restaurant?.url || !match.matchedItems?.length) {
+      console.warn('Dados inválidos para formatação da recomendação');
       return '';
     }
 
-    // Validar se o restaurante existe no banco de dados
+    // Validação rigorosa da URL do restaurante
     if (!RestaurantService.validateRestaurantUrl(match.restaurant.url)) {
       console.error(`Restaurante com URL ${match.restaurant.url} não encontrado no banco de dados`);
       return '';
     }
 
-    let text = `${match.restaurant.url}\n\n💡 `;
+    // Encontrar o restaurante no banco de dados
+    const restaurantFromDb = restaurantDatabase.find(r => r.url === match.restaurant.url);
+    if (!restaurantFromDb) {
+      console.error(`Restaurante não encontrado no banco de dados: ${match.restaurant.url}`);
+      return '';
+    }
+
+    // Usar os dados do restaurante do banco
+    let text = `${restaurantFromDb.url}\n\n💡 `;
     text += RestaurantService.getRecommendationMessage(match.matchedItems);
     text += '\n\n';
     text += RestaurantService.formatMatchedItems(match.matchedItems);
@@ -116,8 +126,11 @@ class RestaurantService {
   }
 
   private static findMatchingRestaurantForMeal(mealType: MealType, keywords: string[]): MealMatch | null {
-    // Filtrar apenas restaurantes que oferecem este tipo de refeição
-    const availableRestaurants = restaurantDatabase.filter(r => r.mealTypes.includes(mealType));
+    // Filtrar apenas restaurantes que oferecem este tipo de refeição E existem no banco
+    const availableRestaurants = restaurantDatabase.filter(r => 
+      r.mealTypes.includes(mealType) && 
+      RestaurantService.validateRestaurantUrl(r.url)
+    );
     
     if (!availableRestaurants.length) {
       console.warn(`Nenhum restaurante encontrado para ${mealType}`);
@@ -138,7 +151,14 @@ class RestaurantService {
     .filter(match => match.matchCount >= CONFIG.MIN_MATCH_COUNT)
     .sort((a, b) => b.matchCount - a.matchCount);
 
-    return matches.length > 0 ? matches[0] : null;
+    // Garantir que retornamos apenas restaurantes do banco
+    const bestMatch = matches.length > 0 ? matches[0] : null;
+    if (bestMatch && !RestaurantService.validateRestaurantUrl(bestMatch.restaurant.url)) {
+      console.warn(`Restaurante ${bestMatch.restaurant.url} não encontrado no banco de dados`);
+      return null;
+    }
+
+    return bestMatch;
   }
 
   public static findRestaurantsByDiet(dietDescription: string): MealMatch[] {
@@ -185,7 +205,7 @@ class RestaurantService {
 
     // Verificar se há restaurantes para refeições principais
     const hasMainMeals = CONFIG.MAIN_MEAL_TYPES.some(type => 
-      restaurants.some(r => r.mealType === type)
+      restaurants.some(r => r.mealType === type && RestaurantService.validateRestaurantUrl(r.restaurant.url))
     );
 
     if (!hasMainMeals) {
@@ -194,9 +214,13 @@ class RestaurantService {
 
     let response = MESSAGES.RECOMMENDATIONS_HEADER;
 
-    // Mostrar apenas refeições principais, usando apenas restaurantes do banco
+    // Mostrar apenas refeições principais com restaurantes validados
     for (const type of CONFIG.MAIN_MEAL_TYPES) {
-      const match = restaurants.find(r => r.mealType === type);
+      const match = restaurants.find(r => 
+        r.mealType === type && 
+        RestaurantService.validateRestaurantUrl(r.restaurant.url)
+      );
+      
       if (match) {
         response += `**${MEAL_TYPES[type]}**\n\n`;
         response += RestaurantService.formatMealRecommendation(match);
