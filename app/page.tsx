@@ -3,6 +3,7 @@
 import AssistantMessage from "@/components/assistant-message";
 import SendMessageForm from "@/components/send-message-form";
 import UserMessage from "@/components/user-message";
+import SettingsButton from "@/components/settings-button";
 import { useChat } from '@ai-sdk/react';
 import { Fragment, useState } from "react";
 import { Plus } from "lucide-react";
@@ -46,10 +47,10 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#f1faee] to-[#f1faee]/80 dark:from-gray-950 dark:to-gray-900">
       {!isFirstInteraction && (
         <header className="fixed top-0 inset-x-0 z-50">
-          <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#f1faee] via-[#f1faee] to-transparent">
+          <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#f1faee] via-[#f1faee] to-transparent dark:from-gray-950 dark:via-gray-950 dark:to-transparent">
             <div className="flex items-center gap-2 cursor-pointer hover:opacity-80" onClick={handleNewChat}>
               <Image
                 src="/images/icone.png"
@@ -60,7 +61,7 @@ export default function Page() {
                 quality={100}
                 priority
               />
-              <h1 className="text-2xl font-bold text-[#1d3557]">
+              <h1 className="text-2xl font-bold text-[#1d3557] dark:text-white">
                 NutriBot
               </h1>
             </div>
@@ -81,9 +82,9 @@ export default function Page() {
                 quality={100}
                 priority
               />
-              <h1 className="text-6xl font-bold text-[#1d3557]">NutriBot</h1>
+              <h1 className="text-6xl font-bold text-[#1d3557] dark:text-white">NutriBot</h1>
             </div>
-            <p className="text-xl text-[#457b9d]">Seu assistente nutricionista</p>
+            <p className="text-xl text-[#457b9d] dark:text-gray-300">Seu assistente nutricionista</p>
             <div className="w-full max-w-2xl mt-8">
               <SendMessageForm 
                 isThinking={isLoading} 
@@ -98,7 +99,7 @@ export default function Page() {
                 <button
                   key={index}
                   onClick={() => handleSuggestionClick(suggestion.description)}
-                  className="p-4 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1"
+                  className="p-4 rounded-lg text-left transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1 dark:shadow-gray-800"
                   style={{ 
                     backgroundColor: suggestion.color,
                     color: '#f1faee'
@@ -125,7 +126,7 @@ export default function Page() {
                 ))}
               </div>
             </div>
-            <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-[#f1faee] via-[#f1faee] to-transparent pt-20 pb-4">
+            <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-[#f1faee] via-[#f1faee] to-transparent dark:from-gray-950 dark:via-gray-900 dark:to-transparent pt-20 pb-4">
               <div className="container max-w-screen-md mx-auto">
                 <SendMessageForm 
                   isThinking={isLoading} 
@@ -142,6 +143,8 @@ export default function Page() {
           </>
         )}
       </div>
+
+      <SettingsButton />
     </div>
   );
 }

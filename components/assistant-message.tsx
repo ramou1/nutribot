@@ -5,9 +5,11 @@ import { Button } from "@/components/button";
 import { Copy, Check } from "lucide-react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useSettings } from "@/lib/settings-context";
 
 export default function AssistantMessage({ content }: { content: string }) {
   const [copied, setCopied] = useState(false);
+  const { fontSize } = useSettings();
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(content);
@@ -18,7 +20,7 @@ export default function AssistantMessage({ content }: { content: string }) {
   return (
     <Message theirs={true}>
       <div className="flex items-start gap-4">
-        <div className="flex-1 prose prose-sm max-w-none text-[15px]">
+        <div className="flex-1 prose prose-sm max-w-none" style={{ fontSize: `${fontSize}px` }}>
           <ReactMarkdown
             components={{
               p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
@@ -37,12 +39,12 @@ export default function AssistantMessage({ content }: { content: string }) {
         <div className="flex justify-end">
           <Button
             onClick={handleCopy}
-            className="h-8 w-8 p-0 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+            className="h-8 w-8 p-0 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 flex items-center justify-center"
           >
             {copied ? (
-              <Check className="h-4 w-4 text-gray-600" />
+              <Check className="h-4 w-4 text-gray-600 dark:text-gray-300" />
             ) : (
-              <Copy className="h-4 w-4 text-gray-600" />
+              <Copy className="h-4 w-4 text-gray-600 dark:text-gray-300" />
             )}
           </Button>
         </div>
