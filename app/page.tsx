@@ -13,7 +13,7 @@ import Image from "next/image";
 const SUGGESTIONS = [
   {
     title: "Plano Alimentar",
-    description: "Crie um plano alimentar semanal para mim que sou diabético",
+    description: "Crie um plano alimentar para o dia para mim que sou diabético",
     color: "#588157",
     icon: Calendar,
   },
@@ -25,7 +25,7 @@ const SUGGESTIONS = [
   },
   {
     title: "Receitas",
-    description: "Sugira receitas sem lactose e sem glúten",
+    description: "Me sugira receitas sem lactose e sem glúten",
     color: "#344e41",
     icon: ChefHat,
   },
