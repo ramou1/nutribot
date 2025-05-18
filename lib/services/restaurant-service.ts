@@ -11,7 +11,7 @@ import {
 } from '../types/restaurant';
 import { restaurantDatabase } from '../data/restaurants';
 
-class RestaurantService {
+export class RestaurantService {
   private static extractKeywords(text: string): string[] {
     if (!text) return [];
 
