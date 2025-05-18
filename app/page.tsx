@@ -7,6 +7,7 @@ import SettingsButton from "@/components/settings-button";
 import DevelopersMarquee from "@/components/developers-marquee";
 import { useChat } from "@ai-sdk/react";
 import { Fragment, useState } from "react";
+import { Button } from "@/components/button";
 import { Calendar, Utensils, ChefHat } from "lucide-react";
 import Image from "next/image";
 

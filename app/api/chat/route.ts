@@ -1,11 +1,75 @@
 import { streamText, UIMessage } from 'ai';
 import { openai } from '@ai-sdk/openai';
+import { createDietAgent } from '@/lib/agents/diet-agent';
+import { createRestaurantAgent } from '@/lib/agents/restaurant-agent';
+
+const positiveResponses = ['sim', 'quero', 'ok', 'claro', 'pode ser', 'gostaria', 'yes'];
+
+function isPositiveResponse(message: string): boolean {
+  const normalizedMessage = message.toLowerCase().trim();
+  return positiveResponses.some(response =>
+    normalizedMessage === response ||
+    normalizedMessage.includes(response)
+  );
+}
+
+function isRestaurantQuestion(message: string): boolean {
+  const normalizedMessage = message.toLowerCase().trim();
+  const hasRecommendation =
+    normalizedMessage.includes('recomendações') ||
+    normalizedMessage.includes('recomendacoes') ||
+    normalizedMessage.includes('sugestões') ||
+    normalizedMessage.includes('sugestoes');
+
+  return hasRecommendation &&
+    normalizedMessage.includes('restaurantes') &&
+    normalizedMessage.includes('dieta');
+}
+
+// Adicionar função para remover as tags de URL
+function removeUrlTags(text: string): string {
+  return text.replace(/<URL>|<\/URL>/g, '');
+}
+
+// Função para processar a resposta do GPT e remover as tags de URL
+async function processGPTResponse(response: Response): Promise<Response> {
+  const reader = response.body?.getReader();
+  if (!reader) return response;
+
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder();
+
+  return new Response(
+    new ReadableStream({
+      async start(controller) {
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const text = decoder.decode(value);
+            const cleanText = removeUrlTags(text);
+            controller.enqueue(encoder.encode(cleanText));
+          }
+          controller.close();
+        } catch (error) {
+          controller.error(error);
+        }
+      },
+    }),
+    {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+      },
+    }
+  );
+}
 
 export async function POST(request: Request) {
   const { messages }: { messages: UIMessage[] } = await request.json();
 
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
-    return new Response(JSON.stringify({ error: "Messages are required" }), { 
+    return new Response(JSON.stringify({ error: "Messages are required" }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -14,7 +78,7 @@ export async function POST(request: Request) {
   try {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "OpenAI API key is required" }), { 
+      return new Response(JSON.stringify({ error: "OpenAI API key is required" }), {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       });
@@ -22,36 +86,35 @@ export async function POST(request: Request) {
 
     // Truncate to the last 8 messages
     let truncatedMessages = messages.slice(-8);
+    const lastMessage = truncatedMessages[truncatedMessages.length - 1];
+    const previousMessage = truncatedMessages[truncatedMessages.length - 2];
 
-    const result = streamText({
-      model: openai('gpt-4'),
-      system: `Você é a NutriBot, uma assistente nutricionista especializada em ajudar pessoas a encontrarem opções alimentares adequadas às suas necessidades específicas.
+    // Check if user is asking for restaurant recommendations
+    const isAskingForRestaurants =
+      previousMessage?.content &&
+      isRestaurantQuestion(previousMessage.content) &&
+      isPositiveResponse(lastMessage.content);
 
-Suas principais responsabilidades são:
-- Coletar informações sobre restrições alimentares (alergias, intolerâncias)
-- Entender preferências pessoais e objetivos de saúde
-- Recomendar pratos específicos dos cardápios de restaurantes parceiros
-- Sugerir adaptações possíveis em pratos existentes
-- Fornecer informações nutricionais aproximadas
-- Manter um histórico de pedidos para refinar recomendações futuras
+    if (isAskingForRestaurants) {
+      console.log('Detectada solicitação de restaurantes');
+      const { recommendations, success } = await createRestaurantAgent(truncatedMessages);
+      return recommendations;
+    }
 
-Você deve:
-- Manter o foco em nutrição e alimentação saudável
-- Ser profissional e acolhedora
-- Fornecer informações precisas e baseadas em evidências
-- Respeitar restrições alimentares e preferências do usuário
-- Sugerir alternativas quando necessário
-- Explicar os benefícios nutricionais das recomendações
+    // If not asking for restaurants, use the Diet Agent
+    const dietResponse = await createDietAgent(truncatedMessages);
 
-Se o usuário tentar desviar do assunto de nutrição, gentilmente redirecione a conversa para o tema de alimentação saudável e bem-estar.`,
-      messages: truncatedMessages,
-      maxTokens: 500,
-    });
+    if (dietResponse.type === 'askingForRestaurants') {
+      console.log('Diet Agent sinalizou pedido de recomendações');
+      const { recommendations, success } = await createRestaurantAgent(truncatedMessages);
+      return recommendations;
+    }
 
-    return result.toDataStreamResponse();
+    return dietResponse.toDataStreamResponse();
+
   } catch (error) {
-    console.error(error);
-    return new Response(JSON.stringify({ error: "Failed to get response from OpenAI" }), { 
+    console.error('Erro no processamento:', error);
+    return new Response(JSON.stringify({ error: "Failed to process request" }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
