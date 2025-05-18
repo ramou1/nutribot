@@ -9,17 +9,17 @@ export default function UserMessage({ children }: { children: React.ReactNode })
   return (
     <div className="flex justify-end gap-4">
       <div 
-        className="bg-[#588157] text-white rounded-2xl rounded-tr-none px-4 py-2 max-w-[85%]"
+        className="bg-[#588157] text-white rounded-2xl rounded-br-none px-4 py-2 max-w-[85%]"
         style={{ fontSize: `${fontSize}px` }}
       >
         {children}
       </div>
       <Image
-        src="/images/user-avatar.png"
+        src="/images/user-avatar-48.png"
         alt="Você"
-        width={56}
-        height={56}
-        className="w-14 h-14 rounded-full"
+        width={48}
+        height={48}
+        className="w-12 h-12 rounded-full self-end"
         quality={100}
       />
     </div>

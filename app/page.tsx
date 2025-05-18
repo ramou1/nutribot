@@ -25,7 +25,7 @@ const SUGGESTIONS = [
   },
   {
     title: "Receitas",
-    description: "Me sugira receitas sem lactose e sem glúten",
+    description: "Me sugira uma receita simples sem lactose e sem glúten e monte uma dieta que inclua essa receita",
     color: "#344e41",
     icon: ChefHat,
   },
@@ -57,24 +57,25 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e9e9e9] dark:bg-[#1a1a1a]">
-      <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-[#e9e9e9] via-[#e0e0e0] to-[#d4d4d4] dark:from-[#1a1a1a] dark:via-[#2d3a2d] dark:to-[#344e41] -z-10" />
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#1a1a1a]">
+      <div className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-[#fafafa] via-[#f8f8f8] to-[#f5f5f5] dark:from-[#1a1a1a] dark:via-[#2d3a2d] dark:to-[#344e41] -z-10" />
       <DevelopersMarquee />
       {!isFirstInteraction && (
         <header className="fixed top-0 inset-x-0 z-50">
-          <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#e9e9e9] via-[#e9e9e9] to-transparent dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-transparent">
+          <div className="w-full px-4 h-16 flex items-center justify-between bg-gradient-to-b from-[#fafafa] via-[#fafafa] to-transparent dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-transparent">
             <div
               className="flex items-center gap-2 cursor-pointer hover:opacity-80"
               onClick={handleNewChat}
             >
               <Image
-                src="/images/icone.png"
+                src="/images/icone-32.png"
                 alt="NutriBot"
                 width={32}
                 height={32}
                 className="rounded-full"
                 quality={100}
                 priority
+                unoptimized
               />
               <h1 className="text-2xl font-bold text-[#344e41] dark:text-[#a3b18a]">
                 NutriBot
@@ -89,13 +90,14 @@ export default function Page() {
           <div className="flex-1 flex flex-col items-center justify-center gap-1 mt-40">
             <div className="flex items-center gap-3">
               <Image
-                src="/images/icone.png"
+                src="/images/icone-48.png"
                 alt="NutriBot"
                 width={48}
                 height={48}
                 className="rounded-full"
                 quality={100}
                 priority
+                unoptimized
               />
               <h1 className="text-6xl font-bold text-[#344e41] dark:text-[#a3b18a]">
                 NutriBot
@@ -152,7 +154,7 @@ export default function Page() {
                 ))}
               </div>
             </div>
-            <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-[#e9e9e9] via-[#e9e9e9] to-transparent dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-transparent pt-20 pb-4">
+            <div className="fixed inset-x-0 bottom-0 bg-gradient-to-t from-[#fafafa] via-[#fafafa] to-transparent dark:from-[#1a1a1a] dark:via-[#1a1a1a] dark:to-transparent pt-20 pb-4">
               <div className="container max-w-screen-md mx-auto">
                 <SendMessageForm
                   isThinking={isLoading}

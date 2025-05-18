@@ -20,16 +20,16 @@ export default function AssistantMessage({ content }: { content: string }) {
   return (
     <div className="flex justify-start gap-4">
       <Image
-        src="/images/icone.png"
+        src="/images/nutribot-avatar-48.png"
         alt="NutriBot"
-        width={56}
-        height={56}
-        className="w-14 h-14 rounded-full"
+        width={48}
+        height={48}
+        className="w-12 h-12 rounded-full self-end"
         quality={100}
       />
       <div className="relative group">
         <div 
-          className="bg-white dark:bg-[#2a2a2a] rounded-2xl rounded-tl-none px-4 py-2 max-w-[85%] prose dark:prose-invert prose-sm max-w-none relative flex items-start gap-2 group"
+          className="bg-[#f0f0f0] dark:bg-[#2a2a2a] rounded-2xl rounded-bl-none px-4 py-2 max-w-[85%] prose dark:prose-invert prose-sm max-w-none relative flex items-start gap-2 group"
           style={{ fontSize: `${fontSize}px` }}
         >
           <div className="flex-1">
