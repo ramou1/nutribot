@@ -5,7 +5,6 @@ import SendMessageForm from "@/components/send-message-form";
 import UserMessage from "@/components/user-message";
 import { useChat } from '@ai-sdk/react';
 import { Fragment, useState } from "react";
-import { Plus } from "lucide-react";
 import { Button } from "@/components/button";
 
 const SUGGESTIONS = [
