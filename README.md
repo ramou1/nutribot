@@ -64,6 +64,8 @@ O NutriBot está preparado para auxiliar pessoas com as seguintes restrições a
 
 ## 🎥 Demonstração
 
+https://raw.githubusercontent.com/ramou1/nutribot/main/public/video/nutribot.mov
+
 <video width="800" controls>
   <source src="https://raw.githubusercontent.com/ramou1/nutribot/main/public/video/nutribot.mov" type="video/quicktime">
   Seu navegador não suporta o elemento de vídeo.
