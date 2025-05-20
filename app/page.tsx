@@ -42,6 +42,7 @@ export default function Page() {
     handleSubmit,
     isLoading,
     setMessages,
+    error
   } = useChat();
   const [isFirstInteraction, setIsFirstInteraction] = useState(true);
 
@@ -158,7 +159,11 @@ export default function Page() {
                       {message.role === "user" ? (
                         <UserMessage>{message.content}</UserMessage>
                       ) : (
-                        <AssistantMessage content={message.content} />
+                        <AssistantMessage 
+                          content={message.content} 
+                          isTyping={isLoading && i === messages.length - 1}
+                          error={error && i === messages.length - 1 ? "Desculpe, estou enfrentando problemas para processar sua solicitação. Por favor, tente novamente." : undefined}
+                        />
                       )}
                     </Fragment>
                   ))}
