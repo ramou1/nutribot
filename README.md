@@ -56,7 +56,7 @@ O NutriBot está preparado para auxiliar pessoas com as seguintes restrições a
 <div align="center">
   <img src="https://i.imgur.com/PHkFQIS.png" alt="Interface do NutriBot" width="800"/>
   
-  <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px;">
+  <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
     <img src="https://i.imgur.com/lwieDeh.png" alt="Assistente Nutricional" width="640"/>
     <img src="https://i.imgur.com/qwex4l9.png" alt="Assistente de Restaurantes" width="160"/>
   </div>
