@@ -44,20 +44,6 @@ O NutriBot está preparado para auxiliar pessoas com as seguintes restrições a
 - **Para Clientes**: Recebem recomendações personalizadas baseadas em suas necessidades específicas
 - **Para Restaurantes**: Podem atender melhor públicos com necessidades alimentares específicas
 
-## 🚀 Como Executar
-
-1. Clone o repositório
-2. Crie um arquivo `.env` baseado no `.env.sample` e adicione as variáveis de ambiente necessárias
-3. Instale as dependências:
-   ```bash
-   npm install
-   ```
-4. Execute o projeto em modo de desenvolvimento:
-   ```bash
-   npm run dev
-   ```
-5. Acesse a aplicação em `http://localhost:3000`
-
 ## 🛠️ Tecnologias Utilizadas
 
 - Next.js
@@ -71,8 +57,8 @@ O NutriBot está preparado para auxiliar pessoas com as seguintes restrições a
   <img src="https://i.imgur.com/PHkFQIS.png" alt="Interface do NutriBot" width="800"/>
   
   <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
-    <img src="https://i.imgur.com/lwieDeh.png" alt="Assistente Nutricional" width="400"/>
-    <img src="https://i.imgur.com/qwex4l9.png" alt="Assistente de Restaurantes" width="200"/>
+    <img src="https://i.imgur.com/lwieDeh.png" alt="Assistente Nutricional" width="640"/>
+    <img src="https://i.imgur.com/qwex4l9.png" alt="Assistente de Restaurantes" width="160"/>
   </div>
 </div>
 
