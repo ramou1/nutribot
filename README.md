@@ -65,6 +65,12 @@ O NutriBot está preparado para auxiliar pessoas com as seguintes restrições a
 - TypeScript
 - Tailwind CSS
 
+## 📸 Screenshots
+
+![Interface do NutriBot](https://i.imgur.com/PHkFQIS.png)
+![Assistente Nutricional](https://i.imgur.com/lwieDeh.png)
+![Assistente de Restaurantes](https://i.imgur.com/qwex4l9.png)
+
 ## 📝 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
