@@ -2,7 +2,7 @@
 
 ## 📋 Sobre o Projeto
 
-NutriBot é uma plataforma que oferece dois assistentes inteligentes:
+NutriBot é uma plataforma que oferece dois assistentes inteligentes, desenvolvida durante o hackathon da empresa Brendi no dia 17/05/2025:
 
 1. **Assistente Nutricional (NutriBot)**: Utiliza LLM (Large Language Model) para auxiliar clientes a encontrarem opções alimentares adequadas às suas necessidades específicas.
 2. **Assistente de Restaurantes (ChefBot)**: Ajuda usuários a encontrarem restaurantes e pratos que atendam às suas necessidades alimentares específicas.
