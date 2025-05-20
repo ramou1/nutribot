@@ -67,9 +67,14 @@ O NutriBot está preparado para auxiliar pessoas com as seguintes restrições a
 
 ## 📸 Screenshots
 
-![Interface do NutriBot](https://i.imgur.com/PHkFQIS.png)
-![Assistente Nutricional](https://i.imgur.com/lwieDeh.png)
-![Assistente de Restaurantes](https://i.imgur.com/qwex4l9.png)
+<div align="center">
+  <img src="https://i.imgur.com/PHkFQIS.png" alt="Interface do NutriBot" width="800"/>
+  
+  <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+    <img src="https://i.imgur.com/lwieDeh.png" alt="Assistente Nutricional" width="400"/>
+    <img src="https://i.imgur.com/qwex4l9.png" alt="Assistente de Restaurantes" width="200"/>
+  </div>
+</div>
 
 ## 📝 Licença
 
