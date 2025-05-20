@@ -62,6 +62,10 @@ O NutriBot está preparado para auxiliar pessoas com as seguintes restrições a
   </div>
 </div>
 
+## 🎥 Demonstração
+
+https://raw.githubusercontent.com/ramonpaolo/nutribot/main/public/video/nutribot.mov
+
 ## 📝 Licença
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
